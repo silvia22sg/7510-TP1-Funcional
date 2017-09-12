@@ -5,16 +5,18 @@
 (defn isRule [x]
     (re-find #"^[^\(]*\([^)]*\):-([^\(]*\([^)]*\), *)*([^\(]*\([^)]*\))$" x)
 )
+(defn searchElem [x lista]
+  (if (empty? lista) false
+      (if (= x (first lista)) true (searchElem x (rest lista)))
+  )
+)
 (defn evaluateFacts [x lista]
-  ;Si el query se encuentra en la listaFacts entonces
-  (println "SI")
+ (if (searchElem x lista) (println "SI") (println "NO"))
 )
 (defn evaluateRule [x]
 )
-(defn generarLista[x lista]
+(defn generarLista [x lista]
     (cons x lista)
-)
-(defn search [x list]
 )
 (defn evaluate-query [database query]
 (def listaFacts '())
@@ -29,7 +31,7 @@
    
       (def query1 (clojure.string/replace query #"(\t|\n)" ""))
       (def query2 (clojure.string/replace query1 #"(\t|\s)" "")) 
-     ; (if (isFacts query2) (evaluateFacts query2 listaFacts)) 
+      (if (isFacts query2) (evaluateFacts query2 listaFacts)) 
      ; (if (isRule query2) (evaluateRule query2 listaRule)) 
 
 
