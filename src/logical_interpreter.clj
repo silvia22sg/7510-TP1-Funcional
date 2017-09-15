@@ -48,10 +48,9 @@
       (if (= nameRule nameQuery) (def valid true) (def valid false)) 
   )
   ;ex: hijo(pepe,juan) ->[pepe juan]
-  (def valueList (clojure.string/split (first (rest xlist)) #",")) 
+  (if (empty? (rest xlist)) (def valid false) (def valueList (clojure.string/split (first (rest xlist)) #",")))
   ;ex: hija(X,Y) -> [X Y]
   (def varList (clojure.string/split (first (rest newFacts)) #","))
-
   (if (= valid true) 
     ;In assignValue enter as parameters, ex: 1-> varon(X),padre(Y,X), 2-> {X pepe, Y juan}, 3-> lista de Facts
     (assignValue (first (rest (clojure.string/split yElem #":-"))) (generateMap varList valueList nil) listFacts) (println "NO")
